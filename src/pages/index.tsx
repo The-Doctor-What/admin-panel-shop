@@ -1,4 +1,3 @@
-import {Layout, Link} from "@/components";
 import dynamic from 'next/dynamic';
 
 const TelegramWebApp = dynamic(() => import('@/components/TelegramWebApp'), {
@@ -6,7 +5,6 @@ const TelegramWebApp = dynamic(() => import('@/components/TelegramWebApp'), {
 });
 
 export default function Home() {
-
     return (
         <div>
             <TelegramWebApp />

@@ -3,6 +3,7 @@ import type {AppProps} from 'next/app'
 import Script from "next/script";
 import React, {createContext, useState} from "react";
 import {NotificationsBar} from "@/components";
+import { WebAppProvider } from '@vkruglikov/react-telegram-web-app';
 
 export type NotificationsContextType = {
   notifications: { title: string, type: string, text: string, id: string }[],
@@ -31,14 +32,17 @@ export default function App({Component, pageProps}: AppProps) {
   }
 
   return <>
-    <NotificationsContext.Provider value={{
-      notifications,
-      sendNotification,
-      deleteNotification
-    }}>
-      <Component {...pageProps} />
-      <Script src="https://kit.fontawesome.com/4217917e45.js" crossOrigin="anonymous"/>
-      <NotificationsBar/>
-    </NotificationsContext.Provider>
+    <Script src="https://telegram.org/js/telegram-web-app.js" strategy="beforeInteractive" />
+    <WebAppProvider>
+      <NotificationsContext.Provider value={{
+        notifications,
+        sendNotification,
+        deleteNotification
+      }}>
+        <Component {...pageProps} />
+        <Script src="https://kit.fontawesome.com/4217917e45.js" crossOrigin="anonymous"/>
+        <NotificationsBar/>
+      </NotificationsContext.Provider>
+    </WebAppProvider>
   </>
 }
